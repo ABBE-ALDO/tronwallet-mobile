@@ -19,6 +19,7 @@ export const ButtonSize = {
 
 export const Colors = {
   background: '#191A2A',
+  shadowBackground: 'rgba(0,0,0,0.5)',
   darkerBackground: '#10101A',
   greyBlue: '#9c9eb9',
   dusk: '#3f415d',
