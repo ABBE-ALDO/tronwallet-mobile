@@ -1,5 +1,5 @@
 import React, { PureComponent, Fragment } from 'react'
-import { func } from 'prop-types'
+import { func, string } from 'prop-types'
 
 import tl from '../../utils/i18n'
 import { isPrivateKeyValid } from '../../services/address'
@@ -14,12 +14,14 @@ import QRScannerModal from './QRScannerModal'
 class PrivateKeyInput extends PureComponent {
   static propTypes = {
     innerRef: func,
-    onChangeText: func
+    onChangeText: func,
+    labelWrapperColor: string
   }
 
   static defaultProps = {
     innerRef: () => {},
-    onChangeText: () => {}
+    onChangeText: () => {},
+    labelWrapperColor: Colors.background
   }
 
   state = {
@@ -55,7 +57,7 @@ class PrivateKeyInput extends PureComponent {
   )
 
   render () {
-    const { innerRef } = this.props
+    const { innerRef, labelWrapperColor } = this.props
     const { privateKey, pkError, qrModalVisible } = this.state
 
     return (
@@ -66,6 +68,8 @@ class PrivateKeyInput extends PureComponent {
           rightContent={this._rightContent}
           value={privateKey}
           onChangeText={pk => this._changePrivateKey(pk)}
+          labelWrapperColor={labelWrapperColor}
+          placeholder=' '
           multiline
           blurOnSubmit
         />

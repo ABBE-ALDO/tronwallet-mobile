@@ -5,17 +5,15 @@ import MixPanel from 'react-native-mixpanel'
 import tl from '../../utils/i18n'
 import { createNewAccount } from '../../utils/secretsUtils'
 import { logSentry } from '../../utils/sentryUtils'
-import withContext from '../../utils/hocs/withContext'
 
-import { ContactsModalWrapper, ContactsModalCard } from '../ActionModal/elements'
 import Modal from '../Modal'
-import { Colors } from '../DesignSystem'
 import ButtonGradient from '../ButtonGradient'
-import TransparentButton from '../TransparentButton'
-import { View, Text, VerticalSpacer } from '../Utils'
+import { View } from '../Utils'
+import { Colors } from '../DesignSystem'
 
 import ModalHeader from './ModalHeader'
 import AccountNameInput from './AccountNameInput'
+import AccountTypeSelector from './AccountTypeSelector'
 
 class AddAccountModal extends PureComponent {
   static propTypes = {
@@ -66,7 +64,6 @@ class AddAccountModal extends PureComponent {
     const {
       visible,
       closeModal,
-      gotoAddExistentAccount,
       pin,
       totalAccounts
     } = this.props
@@ -80,8 +77,8 @@ class AddAccountModal extends PureComponent {
         animationType='fade'
         transparent
       >
-        <ContactsModalWrapper>
-          <ContactsModalCard>
+        <View flex={1} justify='center' background={Colors.shadowBackground} padding={15}>
+          <View borderRadius={5} background={Colors.dusk} padding={15}>
             <ModalHeader
               title={tl.t('newAccount.title')}
               onClose={closeModal}
@@ -91,26 +88,17 @@ class AddAccountModal extends PureComponent {
               totalAccounts={totalAccounts}
               onChangeText={this._changeAccountName}
             />
+            <AccountTypeSelector />
             <ButtonGradient
               text={tl.t(`import.button.create`)}
               onPress={this._addNewAccount}
               disabled={accountNameInvalid}
             />
-            <VerticalSpacer size='medium' />
-            <View align='center'>
-              <Text size='tiny' color={Colors.greyBlue}>OR</Text>
-            </View>
-            <View align='center'>
-              <TransparentButton
-                title={tl.t('import.button.addAccount')}
-                onPress={() => gotoAddExistentAccount()}
-              />
-            </View>
-          </ContactsModalCard>
-        </ContactsModalWrapper>
+          </View>
+        </View>
       </Modal>
     )
   }
 }
 
-export default withContext(AddAccountModal)
+export default AddAccountModal

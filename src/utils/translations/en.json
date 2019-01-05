@@ -679,10 +679,12 @@
       "create": "CREATE",
       "addAccount": "ADD EXISTENT ACCOUNT"
     },
+    "onlyTypeAccount": "Only type account name",
     "header": {
       "privateKey": "Private Key",
       "mnemonic": "Mnemonic",
-      "watch": "Watch"
+      "watch": "Watch",
+      "default": "default"
     }
   }
 }

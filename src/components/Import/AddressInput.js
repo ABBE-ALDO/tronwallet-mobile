@@ -1,5 +1,5 @@
 import React, { PureComponent, Fragment } from 'react'
-import { func } from 'prop-types'
+import { func, string } from 'prop-types'
 
 import tl from '../../utils/i18n'
 import { isAddressValid } from '../../services/address'
@@ -15,13 +15,15 @@ class AddressInput extends PureComponent {
   static propTypes = {
     onChangeText: func,
     innerRef: func,
-    onSubmitEditing: func
+    onSubmitEditing: func,
+    labelWrapperColor: string
   }
 
   static defaultProps = {
     onChangeText: () => {},
     innerRef: () => {},
-    onSubmitEditing: () => {}
+    onSubmitEditing: () => {},
+    labelWrapperColor: Colors.background
   }
 
   state = {
@@ -56,7 +58,7 @@ class AddressInput extends PureComponent {
   )
 
   render () {
-    const { innerRef, onSubmitEditing } = this.props
+    const { innerRef, onSubmitEditing, labelWrapperColor } = this.props
     const { address, addressError, qrModalVisible } = this.state
 
     return (
@@ -64,10 +66,12 @@ class AddressInput extends PureComponent {
         <Input
           innerRef={innerRef}
           label={tl.t('address').toUpperCase()}
+          labelWrapperColor={labelWrapperColor}
           rightContent={this._rightContent}
           value={address}
           onChangeText={to => this._changeAddress(to)}
           onSubmitEditing={onSubmitEditing}
+          placeholder=' '
         />
         {!!addressError && (
           <Text marginY={8} size='xsmall' color={Colors.redError}>
