@@ -3,9 +3,11 @@
 exports[`Add account Modal component Should match when render component 1`] = `
 ShallowWrapper {
   Symbol(enzyme.__root__): [Circular],
-  Symbol(enzyme.__unrendered__): <_class
+  Symbol(enzyme.__unrendered__): <AddAccountModal
+    onCreated={[Function]}
     pin="123456"
     totalAccounts={1}
+    visible={false}
   />,
   Symbol(enzyme.__renderer__): Object {
     "batchedUpdates": [Function],
@@ -20,27 +22,177 @@ ShallowWrapper {
     "key": undefined,
     "nodeType": "function",
     "props": Object {
-      "children": [Function],
+      "animationType": "fade",
+      "children": <Styled(View)
+        align="stretch"
+        background="rgba(0,0,0,0.5)"
+        flex={1}
+        justify="center"
+        padding={15}
+      >
+        <Styled(View)
+          align="stretch"
+          background="#3f415d"
+          borderRadius={5}
+          justify="flex-start"
+          padding={15}
+        >
+          <ModalHeader
+            onClose={[Function]}
+            title="Account Creation"
+          />
+          <AccountNameInput
+            onChangeText={[Function]}
+            pin="123456"
+            totalAccounts={1}
+          />
+          <AccountTypeSelector />
+          <ButtonGradient
+            disabled={false}
+            font="medium"
+            leftRadius={4}
+            onPress={[Function]}
+            rightRadius={4}
+            size="large"
+            text="CREATE"
+          />
+        </Styled(View)>
+      </Styled(View)>,
+      "closeModal": undefined,
+      "modalOpened": false,
+      "transparent": true,
     },
     "ref": null,
-    "rendered": [Function],
-    "type": Object {
-      "$$typeof": Symbol(react.context),
-      "_calculateChangedBits": null,
-      "_context": Object {
-        "$$typeof": Symbol(react.context),
-        "Consumer": [Circular],
-        "Provider": Object {
-          "$$typeof": Symbol(react.provider),
-          "_context": [Circular],
-        },
-        "_calculateChangedBits": null,
-        "_currentRenderer": null,
-        "_currentRenderer2": null,
-        "_currentValue": Object {},
-        "_currentValue2": Object {},
+    "rendered": Object {
+      "instance": null,
+      "key": undefined,
+      "nodeType": "class",
+      "props": Object {
+        "align": "stretch",
+        "background": "rgba(0,0,0,0.5)",
+        "children": <Styled(View)
+          align="stretch"
+          background="#3f415d"
+          borderRadius={5}
+          justify="flex-start"
+          padding={15}
+        >
+          <ModalHeader
+            onClose={[Function]}
+            title="Account Creation"
+          />
+          <AccountNameInput
+            onChangeText={[Function]}
+            pin="123456"
+            totalAccounts={1}
+          />
+          <AccountTypeSelector />
+          <ButtonGradient
+            disabled={false}
+            font="medium"
+            leftRadius={4}
+            onPress={[Function]}
+            rightRadius={4}
+            size="large"
+            text="CREATE"
+          />
+        </Styled(View)>,
+        "flex": 1,
+        "justify": "center",
+        "padding": 15,
       },
+      "ref": null,
+      "rendered": Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "class",
+        "props": Object {
+          "align": "stretch",
+          "background": "#3f415d",
+          "borderRadius": 5,
+          "children": Array [
+            <ModalHeader
+              onClose={[Function]}
+              title="Account Creation"
+            />,
+            <AccountNameInput
+              onChangeText={[Function]}
+              pin="123456"
+              totalAccounts={1}
+            />,
+            <AccountTypeSelector />,
+            <ButtonGradient
+              disabled={false}
+              font="medium"
+              leftRadius={4}
+              onPress={[Function]}
+              rightRadius={4}
+              size="large"
+              text="CREATE"
+            />,
+          ],
+          "justify": "flex-start",
+          "padding": 15,
+        },
+        "ref": null,
+        "rendered": Array [
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "function",
+            "props": Object {
+              "onClose": [Function],
+              "title": "Account Creation",
+            },
+            "ref": null,
+            "rendered": null,
+            "type": [Function],
+          },
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "class",
+            "props": Object {
+              "onChangeText": [Function],
+              "pin": "123456",
+              "totalAccounts": 1,
+            },
+            "ref": null,
+            "rendered": null,
+            "type": [Function],
+          },
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "class",
+            "props": Object {},
+            "ref": null,
+            "rendered": null,
+            "type": [Function],
+          },
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "function",
+            "props": Object {
+              "disabled": false,
+              "font": "medium",
+              "leftRadius": 4,
+              "onPress": [Function],
+              "rightRadius": 4,
+              "size": "large",
+              "text": "CREATE",
+            },
+            "ref": null,
+            "rendered": null,
+            "type": [Function],
+          },
+        ],
+        "type": [Function],
+      },
+      "type": [Function],
     },
+    "type": [Function],
   },
   Symbol(enzyme.__nodes__): Array [
     Object {
@@ -48,27 +200,177 @@ ShallowWrapper {
       "key": undefined,
       "nodeType": "function",
       "props": Object {
-        "children": [Function],
+        "animationType": "fade",
+        "children": <Styled(View)
+          align="stretch"
+          background="rgba(0,0,0,0.5)"
+          flex={1}
+          justify="center"
+          padding={15}
+        >
+          <Styled(View)
+            align="stretch"
+            background="#3f415d"
+            borderRadius={5}
+            justify="flex-start"
+            padding={15}
+          >
+            <ModalHeader
+              onClose={[Function]}
+              title="Account Creation"
+            />
+            <AccountNameInput
+              onChangeText={[Function]}
+              pin="123456"
+              totalAccounts={1}
+            />
+            <AccountTypeSelector />
+            <ButtonGradient
+              disabled={false}
+              font="medium"
+              leftRadius={4}
+              onPress={[Function]}
+              rightRadius={4}
+              size="large"
+              text="CREATE"
+            />
+          </Styled(View)>
+        </Styled(View)>,
+        "closeModal": undefined,
+        "modalOpened": false,
+        "transparent": true,
       },
       "ref": null,
-      "rendered": [Function],
-      "type": Object {
-        "$$typeof": Symbol(react.context),
-        "_calculateChangedBits": null,
-        "_context": Object {
-          "$$typeof": Symbol(react.context),
-          "Consumer": [Circular],
-          "Provider": Object {
-            "$$typeof": Symbol(react.provider),
-            "_context": [Circular],
-          },
-          "_calculateChangedBits": null,
-          "_currentRenderer": null,
-          "_currentRenderer2": null,
-          "_currentValue": Object {},
-          "_currentValue2": Object {},
+      "rendered": Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "class",
+        "props": Object {
+          "align": "stretch",
+          "background": "rgba(0,0,0,0.5)",
+          "children": <Styled(View)
+            align="stretch"
+            background="#3f415d"
+            borderRadius={5}
+            justify="flex-start"
+            padding={15}
+          >
+            <ModalHeader
+              onClose={[Function]}
+              title="Account Creation"
+            />
+            <AccountNameInput
+              onChangeText={[Function]}
+              pin="123456"
+              totalAccounts={1}
+            />
+            <AccountTypeSelector />
+            <ButtonGradient
+              disabled={false}
+              font="medium"
+              leftRadius={4}
+              onPress={[Function]}
+              rightRadius={4}
+              size="large"
+              text="CREATE"
+            />
+          </Styled(View)>,
+          "flex": 1,
+          "justify": "center",
+          "padding": 15,
         },
+        "ref": null,
+        "rendered": Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "class",
+          "props": Object {
+            "align": "stretch",
+            "background": "#3f415d",
+            "borderRadius": 5,
+            "children": Array [
+              <ModalHeader
+                onClose={[Function]}
+                title="Account Creation"
+              />,
+              <AccountNameInput
+                onChangeText={[Function]}
+                pin="123456"
+                totalAccounts={1}
+              />,
+              <AccountTypeSelector />,
+              <ButtonGradient
+                disabled={false}
+                font="medium"
+                leftRadius={4}
+                onPress={[Function]}
+                rightRadius={4}
+                size="large"
+                text="CREATE"
+              />,
+            ],
+            "justify": "flex-start",
+            "padding": 15,
+          },
+          "ref": null,
+          "rendered": Array [
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "function",
+              "props": Object {
+                "onClose": [Function],
+                "title": "Account Creation",
+              },
+              "ref": null,
+              "rendered": null,
+              "type": [Function],
+            },
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "class",
+              "props": Object {
+                "onChangeText": [Function],
+                "pin": "123456",
+                "totalAccounts": 1,
+              },
+              "ref": null,
+              "rendered": null,
+              "type": [Function],
+            },
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "class",
+              "props": Object {},
+              "ref": null,
+              "rendered": null,
+              "type": [Function],
+            },
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "function",
+              "props": Object {
+                "disabled": false,
+                "font": "medium",
+                "leftRadius": 4,
+                "onPress": [Function],
+                "rightRadius": 4,
+                "size": "large",
+                "text": "CREATE",
+              },
+              "ref": null,
+              "rendered": null,
+              "type": [Function],
+            },
+          ],
+          "type": [Function],
+        },
+        "type": [Function],
       },
+      "type": [Function],
     },
   ],
   Symbol(enzyme.__options__): Object {
