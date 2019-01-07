@@ -1,5 +1,6 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import { TabViewAnimated } from 'react-native-tab-view'
+import { func } from 'prop-types'
 
 // Design
 import { View } from '../../Utils'
@@ -13,7 +14,15 @@ import {
 import PrivateKeyAccountOption from './PrivateKeyAccountOption'
 import WatchAccountOption from './WatchAccountOption'
 
-export class AccountTypeSelector extends Component {
+export class AccountTypeSelector extends PureComponent {
+  static propTypes = {
+    onChangeData: func
+  }
+
+  static defaultProps = {
+    onChangeData: () => {}
+  }
+
   static navigationOptions = {
     header: null
   }
@@ -27,14 +36,25 @@ export class AccountTypeSelector extends Component {
     ]
   }
 
-  _handleIndexChange = index => this.setState({ index })
+  componentDidMount () {
+    const { routes, index } = this.state
+    this.props.onSelectType(routes[index].key)
+  }
+
+  _handleIndexChange = index => {
+    const { routes } = this.state
+
+    this.props.onSelectType(routes[index].key)
+    this.setState({ index })
+  }
 
   _renderScene = ({ route }) => {
+    const { onChangeData } = this.props
     switch (route.key) {
       case 'privateKey':
-        return (<PrivateKeyAccountOption />)
+        return (<PrivateKeyAccountOption onChangeData={onChangeData} />)
       case 'watch':
-        return (<WatchAccountOption />)
+        return (<WatchAccountOption onChangeData={onChangeData} />)
       default:
         return (<DefaultAccountOption />)
     }

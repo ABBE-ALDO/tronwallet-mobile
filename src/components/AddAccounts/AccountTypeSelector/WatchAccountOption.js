@@ -1,22 +1,26 @@
-import React, { Component } from 'react'
-import { object, func } from 'prop-types'
+import React, { PureComponent } from 'react'
+import { func } from 'prop-types'
 
 import { View } from '../../Utils'
 import AddressInput from '../../Import/AddressInput'
-import accountOptionComponent from './AccountOption.hoc'
 import { Colors } from '../../DesignSystem'
 
-class WatchAccountOption extends Component {
+class WatchAccountOption extends PureComponent {
   static propTypes = {
-    onChangeData: func.isRequired,
-    accountData: object
+    onChangeData: func.isRequired
   }
 
-  _changeAddress = ({ address, error }) => {
-    const { accountData } = this.props
-    accountData.address = address
+  state = {
+    address: '',
+    error: null,
+    valid: false
+  }
 
-    this.props.onChangeData(accountData, error)
+  _changeAddress = (address, error) => {
+    const valid = !error && !!address
+
+    this.setState({ address, error, valid })
+    this.props.onChangeData({ address, valid })
   }
 
   render () {
@@ -31,10 +35,4 @@ class WatchAccountOption extends Component {
   }
 }
 
-export default accountOptionComponent(
-  'watchOption',
-  {
-    address: ''
-  },
-  WatchAccountOption
-)
+export default WatchAccountOption

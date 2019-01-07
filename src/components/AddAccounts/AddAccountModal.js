@@ -32,11 +32,20 @@ class AddAccountModal extends PureComponent {
 
   state = {
     accountName: '',
-    accountNameInvalid: false
+    accountNameInvalid: false,
+    key: null,
+    accountData: {}
   }
 
   _changeAccountName = (accountName, error) =>
     this.setState({ accountName, accountNameInvalid: !!error })
+
+  _onChangeData = (data) => {
+    const { key, accountData } = this.state
+    this.setState({ accountData: { ...accountData, [key]: data } })
+  }
+
+  _onSelectType = (key) => this.setState({ key })
 
   _addNewAccount = async () => {
     this.setState({ creatingNewAccount: true, accountModalVisible: false })
@@ -60,6 +69,17 @@ class AddAccountModal extends PureComponent {
     }
   }
 
+  _disableAddAccount = () => {
+    const { accountNameInvalid, key, accountData } = this.state
+    let { valid } = accountData[key] || {}
+
+    if (valid === undefined) {
+      valid = key === 'default'
+    }
+
+    return accountNameInvalid || !valid
+  }
+
   render () {
     const {
       visible,
@@ -68,7 +88,7 @@ class AddAccountModal extends PureComponent {
       totalAccounts
     } = this.props
 
-    const { accountNameInvalid } = this.state
+    const addAccountDisabled = this._disableAddAccount()
 
     return (
       <Modal
@@ -88,11 +108,14 @@ class AddAccountModal extends PureComponent {
               totalAccounts={totalAccounts}
               onChangeText={this._changeAccountName}
             />
-            <AccountTypeSelector />
+            <AccountTypeSelector
+              onSelectType={this._onSelectType}
+              onChangeData={this._onChangeData}
+            />
             <ButtonGradient
               text={tl.t(`import.button.create`)}
               onPress={this._addNewAccount}
-              disabled={accountNameInvalid}
+              disabled={addAccountDisabled}
             />
           </View>
         </View>

@@ -1,30 +1,35 @@
-import React, { Component } from 'react'
-import { object, func } from 'prop-types'
+import React, { PureComponent } from 'react'
+import { func } from 'prop-types'
 
 import { View } from '../../Utils'
 import AddressInput from '../../Import/AddressInput'
 import PrivateKeyInput from '../../Import/PrivateKeyInput'
-import accountOptionComponent from './AccountOption.hoc'
 import { Colors } from '../../DesignSystem'
 
-class PrivateKeyAccountOption extends Component {
+class PrivateKeyAccountOption extends PureComponent {
   static propTypes = {
-    onChangeData: func.isRequired,
-    accountData: object
+    onChangeData: func.isRequired
   }
 
-  _changeAddress = ({ address, error }) => {
-    const { accountData } = this.props
-    accountData.address = address
-
-    this.props.onChangeData(accountData, error)
+  state = {
+    address: '',
+    privateKey: '',
+    addressError: null,
+    privateKeyError: null,
+    valid: false
   }
 
-  _changePrivateKey = ({ privateKey, error }) => {
-    const { accountData } = this.props
-    accountData.privateKey = privateKey
+  _changeAddress = (address, addressError) =>
+    this.setState({ address, addressError }, this._changeData)
 
-    this.props.onChangeData(accountData, error)
+  _changePrivateKey = (privateKey, privateKeyError) =>
+    this.setState({ privateKey, privateKeyError }, this._changeData)
+
+  _changeData = () => {
+    const { address, privateKey, addressError, privateKeyError } = this.state
+    const valid = address && privateKey && !addressError && !privateKeyError
+
+    this.props.onChangeData({ address, privateKey, valid })
   }
 
   render () {
@@ -43,11 +48,4 @@ class PrivateKeyAccountOption extends Component {
   }
 }
 
-export default accountOptionComponent(
-  'privateKeyOption',
-  {
-    address: '',
-    privateKey: ''
-  },
-  PrivateKeyAccountOption
-)
+export default PrivateKeyAccountOption
