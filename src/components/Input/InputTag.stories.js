@@ -5,4 +5,3 @@ import Input from './InputTag'
 
 storiesOf('InputTag')
   .add('Default', () => (<Input onChangeText={() => null} />))
-

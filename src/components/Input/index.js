@@ -54,38 +54,39 @@ const Input = ({
   noBorder,
   ...props
 }) => (
-    <Elements.Wrapper>
-      {label && (
-        <Elements.LabelWrapper color={labelWrapperColor}>
-          <Elements.Label>{label}</Elements.Label>
-        </Elements.LabelWrapper>
-      )}
-      <Elements.InputWrapper noBorder={noBorder}>
-        {leftContent && leftContent()}
-        {/* Do not change the order of props in the component
+  <Elements.Wrapper>
+    {label && (
+      <Elements.LabelWrapper color={labelWrapperColor}>
+        <Elements.Label>{label}</Elements.Label>
+      </Elements.LabelWrapper>
+    )}
+    <Elements.InputWrapper noBorder={noBorder}>
+      {leftContent && leftContent()}
+      {/* Do not change the order of props in the component
         below. It needs to be first so that keyboardType comes
         before autoCapitalize or it won't show with the decimal
         button.  */}
-        <Elements.TextInput
-          {...props}
-          innerRef={innerRef}
-          value={formatValue(value, numbersOnly, type)}
-          autoCorrect={false}
-          autoCapitalize='none'
-          underlineColorAndroid='transparent'
-          onChangeText={text => formatText(text, numbersOnly, onChangeText, type)}
-          placeholderTextColor={placeholder ? props.placeholderTextColor : Colors.background}
-          placeholder={placeholder || 'hidden'}
-          editable={editable}
-        />
-        {rightContent && rightContent()}
-      </Elements.InputWrapper>
-    </Elements.Wrapper>
-  )
+      <Elements.TextInput
+        {...props}
+        innerRef={innerRef}
+        value={formatValue(value, numbersOnly, type)}
+        autoCorrect={false}
+        autoCapitalize='none'
+        underlineColorAndroid='transparent'
+        onChangeText={text => formatText(text, numbersOnly, onChangeText, type)}
+        placeholderTextColor={placeholder ? props.placeholderTextColor : Colors.background}
+        placeholder={placeholder || 'hidden'}
+        editable={editable}
+      />
+      {rightContent && rightContent()}
+    </Elements.InputWrapper>
+  </Elements.Wrapper>
+)
 
 Input.defaultProps = {
   labelWrapperColor: '#191A2A',
   placeholderTextColor: '#66688F',
+  borderColor: '#51526B',
   returnKeyType: 'send',
   numbersOnly: false,
   editable: true,

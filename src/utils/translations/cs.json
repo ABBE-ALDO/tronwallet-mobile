@@ -18,7 +18,7 @@
   "success": "Úspěch",
   "warning": "Varování",
   "cancel": "Zrušit",
-  "remove": "Remove",
+  "remove": "Odstranit",
   "address": "Adresa",
   "message": "Zpráva",
   "ex": "Burza",
@@ -669,10 +669,45 @@
       "msg": "Momentálně nejsou k dispozici žádná oznámení"
     },
     "notifications": {
-      "title": "notifications"
+      "title": "oznámení"
     },
     "signals": {
       "title": "SIGNÁLY"
+    }
+  },
+  "contract": {
+    "signMessage": "Automaticky se nepřihlašovat",
+    "time": "Minuty",
+    "confirmationTitle": "CONFIRM",
+    "siteLabel": "SITE",
+    "contractLabel": "CONTRACT",
+    "costLabel": "COST",
+    "button": {
+      "confirm": "CONFIRM",
+      "reject": "REJECT"
+    },
+    "card": {
+      "options": {
+        "title": "Setting this option, all the trigger smart contracts comming from this address and calling that function will be automatically signed"
+      },
+      "switchLabel": "Sign automatically"
+    }
+  },
+  "dapps": {
+    "title": "DAPPS",
+    "search": {
+      "placeholder": "Search or type www.",
+      "go": "GO",
+      "error": "Enter with valid search!"
+    },
+    "home": {
+      "cancelOperation": "done",
+      "bookmark": {
+        "title": "Bookmark"
+      },
+      "history": {
+        "title": "History"
+      }
     }
   }
 }
