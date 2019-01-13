@@ -23,6 +23,7 @@ ShallowWrapper {
     "props": Object {
       "children": Array [
         <Input
+          borderColor="#51526B"
           editable={true}
           label="NAME"
           labelWrapperColor="#3f415d"
@@ -44,6 +45,7 @@ ShallowWrapper {
         "key": undefined,
         "nodeType": "function",
         "props": Object {
+          "borderColor": "#51526B",
           "editable": true,
           "label": "NAME",
           "labelWrapperColor": "#3f415d",
@@ -71,6 +73,7 @@ ShallowWrapper {
       "props": Object {
         "children": Array [
           <Input
+            borderColor="#51526B"
             editable={true}
             label="NAME"
             labelWrapperColor="#3f415d"
@@ -92,6 +95,7 @@ ShallowWrapper {
           "key": undefined,
           "nodeType": "function",
           "props": Object {
+            "borderColor": "#51526B",
             "editable": true,
             "label": "NAME",
             "labelWrapperColor": "#3f415d",

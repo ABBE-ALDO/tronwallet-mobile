@@ -24,6 +24,7 @@ ShallowWrapper {
     "props": Object {
       "children": Array [
         <Input
+          borderColor="#51526B"
           editable={true}
           innerRef={[Function]}
           label="ADDRESS"
@@ -53,6 +54,7 @@ ShallowWrapper {
         "key": undefined,
         "nodeType": "function",
         "props": Object {
+          "borderColor": "#51526B",
           "editable": true,
           "innerRef": [Function],
           "label": "ADDRESS",
@@ -96,6 +98,7 @@ ShallowWrapper {
       "props": Object {
         "children": Array [
           <Input
+            borderColor="#51526B"
             editable={true}
             innerRef={[Function]}
             label="ADDRESS"
@@ -125,6 +128,7 @@ ShallowWrapper {
           "key": undefined,
           "nodeType": "function",
           "props": Object {
+            "borderColor": "#51526B",
             "editable": true,
             "innerRef": [Function],
             "label": "ADDRESS",

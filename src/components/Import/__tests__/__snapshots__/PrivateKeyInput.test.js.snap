@@ -24,6 +24,7 @@ ShallowWrapper {
       "children": Array [
         <Input
           blurOnSubmit={true}
+          borderColor="#51526B"
           editable={true}
           innerRef={[Function]}
           label="PRIVATE KEY"
@@ -54,6 +55,7 @@ ShallowWrapper {
         "nodeType": "function",
         "props": Object {
           "blurOnSubmit": true,
+          "borderColor": "#51526B",
           "editable": true,
           "innerRef": [Function],
           "label": "PRIVATE KEY",
@@ -98,6 +100,7 @@ ShallowWrapper {
         "children": Array [
           <Input
             blurOnSubmit={true}
+            borderColor="#51526B"
             editable={true}
             innerRef={[Function]}
             label="PRIVATE KEY"
@@ -128,6 +131,7 @@ ShallowWrapper {
           "nodeType": "function",
           "props": Object {
             "blurOnSubmit": true,
+            "borderColor": "#51526B",
             "editable": true,
             "innerRef": [Function],
             "label": "PRIVATE KEY",
