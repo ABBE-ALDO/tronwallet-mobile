@@ -1,34 +1,32 @@
-let _db
-
 class RealmStore {
   constructor (db, schema) {
-    _db = db
+    this._db = db
     this.schema = schema
   }
 
   findByKey (key) {
-    return _db.objectForPrimaryKey(this.schema, key)
+    return this._db.objectForPrimaryKey(this.schema, key)
   }
 
   findAll () {
-    return _db.objects(this.schema)
+    return this._db.objects(this.schema)
   }
 
   findBy (filter) {
-    return _db.objects(this.schema).filtered(filter)
+    return this._db.objects(this.schema).filtered(filter)
   }
 
   sort (sortCriteria) {
-    return _db.objects(this.schema).sorted(sortCriteria)
+    return this._db.objects(this.schema).sorted(sortCriteria)
   }
 
   async write (callbackFn) {
-    await _db.write(callbackFn)
+    await this._db.write(callbackFn)
   }
 
   async save (object) {
     await this.write(() => {
-      _db.create(this.schema, object, true)
+      this._db.create(this.schema, object, true)
     })
   }
 
@@ -41,7 +39,7 @@ class RealmStore {
 
   async delete (object) {
     await this.write(() => {
-      _db.delete(this.schema, object)
+      this._db.delete(this.schema, object)
     })
   }
 
@@ -51,7 +49,7 @@ class RealmStore {
   }
 
   get db () {
-    return _db
+    return this._db
   }
 }
 
