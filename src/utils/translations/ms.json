@@ -18,6 +18,7 @@
   "success": "Berjaya",
   "warning": "Amaran",
   "cancel": "Batal",
+  "remove": "Keluarkan",
   "address": "Alamat",
   "message": "Mesej",
   "ex": "Bursa",
@@ -360,6 +361,9 @@
     "notifications": {
       "title": "Pemberitahuan"
     },
+    "dappBrowser": {
+      "title": "Pelayar DApp"
+    },
     "network": {
       "title": "Rangkaian",
       "modal": {
@@ -661,11 +665,49 @@
   },
   "notifications": {
     "title": "PEMBERITAHUAN",
+    "empty": {
+      "msg": "Pemberitahuan tidak tersedia pada masa ini"
+    },
     "notifications": {
-      "title": "TRANSAKSI"
+      "title": "pemberitahuan"
     },
     "signals": {
       "title": "ISYARAT"
+    }
+  },
+  "contract": {
+    "signMessage": "Jangan menandatangani secara automatik",
+    "time": "Minit",
+    "confirmationTitle": "CONFIRM",
+    "siteLabel": "SITE",
+    "contractLabel": "CONTRACT",
+    "costLabel": "COST",
+    "button": {
+      "confirm": "CONFIRM",
+      "reject": "REJECT"
+    },
+    "card": {
+      "options": {
+        "title": "Setting this option, all the trigger smart contracts comming from this address and calling that function will be automatically signed"
+      },
+      "switchLabel": "Sign automatically"
+    }
+  },
+  "dapps": {
+    "title": "DAPPS",
+    "search": {
+      "placeholder": "Search or type www.",
+      "go": "GO",
+      "error": "Enter with valid search!"
+    },
+    "home": {
+      "cancelOperation": "done",
+      "bookmark": {
+        "title": "Bookmark"
+      },
+      "history": {
+        "title": "History"
+      }
     }
   }
 }

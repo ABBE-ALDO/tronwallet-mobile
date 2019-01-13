@@ -18,15 +18,16 @@
   "success": "Erfolg",
   "warning": "Warnung",
   "cancel": "Abbrechen",
+  "remove": "Entfernen",
   "address": "Adresse",
   "message": "Nachricht",
   "ex": "Börse",
   "ok": "Ok",
   "actionModalTitle": "Würden Sie gerne",
-  "time": "Time",
+  "time": "Zeit",
   "account": "Konto",
   "restore": "Wiederherstellen",
-  "security": "Security",
+  "security": "Sicherheit",
   "error": {
     "default": "Es tut uns leid, etwas ist schiefgelaufen. Bitte versuchen Sie es später noch einmal. Wenn der Fehler weiterhin auftritt, versuchen Sie die Netzwerk-Einstellungen zu aktualisieren.",
     "buildingTransaction": "Fehler beim Erstellen der Transaktion, bitte versuchen Sie es erneut.",
@@ -83,13 +84,13 @@
       "buy": "Steigere die Kosten leicht, um damit die Kaufwahrscheinlichkeit zu erhöhen.",
       "sell": "Senke den zu erwartenden Ertrag leicht, um damit die Verkaufswahrscheinlichkeit zu erhöhen."
     },
-    "txAmount": "Transaction Amount",
+    "txAmount": "Transaktionsbetrag",
     "estimatedRevenue": "GESCHÄTZTER ERTRAG",
     "estimatedCost": "GESCHÄTZTE KOSTEN",
     "preview": "Nach dem Tokennamen suchen",
     "notFound": "Börse nicht gefunden",
-    "error": "Exchange not executed. Please review your input values and try again.",
-    "askPin": "Ask PIN for exchange Transactions"
+    "error": "Umtausch nicht durchgeführt. Bitte überprüfen Sie die Eingabeparameter und versuchen es erneut.",
+    "askPin": "Für Börsen-Transaktionen nach der PIN fragen"
   },
   "hideAccount": "Sie sind dabei dieses Konto zu entfernen. Sie können es später in den Einstellungen wiederherstellen",
   "components": {
@@ -359,6 +360,9 @@
     },
     "notifications": {
       "title": "Benachrichtigungen"
+    },
+    "dappBrowser": {
+      "title": "DApp Browser"
     },
     "network": {
       "title": "Netzwerk",
@@ -661,11 +665,49 @@
   },
   "notifications": {
     "title": "BENACHRICHTIGUNGEN",
+    "empty": {
+      "msg": "Momentan sind keine Benachrichtigungen verfügbar"
+    },
     "notifications": {
-      "title": "TRANSAKTIONEN"
+      "title": "Benachrichtigungen"
     },
     "signals": {
       "title": "MELDUNGEN"
+    }
+  },
+  "contract": {
+    "signMessage": "Don't sign automatically",
+    "time": "Minuten",
+    "confirmationTitle": "CONFIRM",
+    "siteLabel": "SITE",
+    "contractLabel": "CONTRACT",
+    "costLabel": "COST",
+    "button": {
+      "confirm": "CONFIRM",
+      "reject": "REJECT"
+    },
+    "card": {
+      "options": {
+        "title": "Setting this option, all the trigger smart contracts comming from this address and calling that function will be automatically signed"
+      },
+      "switchLabel": "Sign automatically"
+    }
+  },
+  "dapps": {
+    "title": "DAPPS",
+    "search": {
+      "placeholder": "Search or type www.",
+      "go": "GO",
+      "error": "Enter with valid search!"
+    },
+    "home": {
+      "cancelOperation": "done",
+      "bookmark": {
+        "title": "Bookmark"
+      },
+      "history": {
+        "title": "History"
+      }
     }
   }
 }

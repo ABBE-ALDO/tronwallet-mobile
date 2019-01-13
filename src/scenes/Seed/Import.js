@@ -42,7 +42,6 @@ class Import extends React.Component {
     Keyboard.dismiss()
 
     this.setState({ loading: true })
-
     try {
       await this._importWallet()
 

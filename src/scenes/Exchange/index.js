@@ -17,11 +17,13 @@ import { logSentry } from '../../utils/sentryUtils'
 import Async from '../../utils/asyncStorageUtils'
 import { FAVORITE_EXCHANGES } from '../../utils/constants'
 import { formatNumber } from '../../utils/numberUtils'
+
 // Services
 import WalletClient from '../../services/client'
 
 export class ExchangeScene extends Component {
     static navigationOptions = { header: null }
+    static displayName = 'Exchange List Screen'
 
     state = {
       exchangeList: [],
@@ -60,10 +62,12 @@ export class ExchangeScene extends Component {
       }
     }
 
-    _getBalanceByName = tokenName => {
-      const { balances, publicKey } = this.props.context
-      if (balances[publicKey]) {
-        const { balance } = balances[publicKey].find(bl => bl.name === tokenName) || { balance: 0 }
+    _getBalanceById = tokenId => {
+      const { getCurrentBalances } = this.props.context
+      const currentBalances = getCurrentBalances()
+
+      if (currentBalances.length) {
+        const { balance } = currentBalances.find(bl => bl.id === tokenId) || { balance: 0 }
         return formatNumber(balance)
       }
       return formatNumber(0, true)
@@ -71,8 +75,8 @@ export class ExchangeScene extends Component {
 
     _sortExList = (list, favList) => (
       sortBy(
-        list.map(ex => ({...ex, favorited: favList.indexOf(ex.exchangeId) > -1, firstTokenUserBalance: this._getBalanceByName(ex.firstTokenId)})),
-        [(ex) => !ex.favorited, (ex) => ex.firstTokenId !== 'TWX', (ex) => -(ex.variation || -999)]
+        list.map(ex => ({...ex, favorited: favList.indexOf(ex.exchangeId) > -1, firstTokenUserBalance: this._getBalanceById(ex.firstTokenId)})),
+        [(ex) => !ex.favorited, (ex) => ex.firstTokenId !== '1000018', (ex) => -(ex.variation || -999)]
       )
     )
 
@@ -112,7 +116,7 @@ export class ExchangeScene extends Component {
         regex.test(ast.secondTokenId.toUpperCase()))
 
       this.setState({ searchName: name }, () => {
-        MixPanel.trackWithProperties('Exchange', { type: 'Searching Exchange', name })
+        MixPanel.trackWithProperties('Searching Exchange', { name })
         const searchedList = name ? resultList : []
         this.setState({ currentList: searchedList })
       })
@@ -136,8 +140,7 @@ export class ExchangeScene extends Component {
       navigation.navigate('ExchangeTabs', { exData: item })
       this.setState({ isSearching: false, currentList: exchangeList, searchName: '' })
 
-      MixPanel.trackWithProperties('Exchange', {
-        type: 'Entering Exchange',
+      MixPanel.trackWithProperties('Entering Exchange', {
         name: `${item.firstTokenId}/${item.secondTokenId}`
       })
     }

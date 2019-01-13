@@ -18,6 +18,7 @@
   "success": "Выполнено",
   "warning": "Внимание",
   "cancel": "Отменить",
+  "remove": "Удалить",
   "address": "Адрес",
   "message": "Сообщение",
   "ex": "Обмен",
@@ -360,6 +361,9 @@
     "notifications": {
       "title": "Уведомления"
     },
+    "dappBrowser": {
+      "title": "DApp браузер"
+    },
     "network": {
       "title": "Сеть",
       "modal": {
@@ -661,11 +665,49 @@
   },
   "notifications": {
     "title": "УВЕДОМЛЕНИЯ",
+    "empty": {
+      "msg": "Нет доступных уведомлений"
+    },
     "notifications": {
-      "title": "ТРАНЗАКЦИИ"
+      "title": "уведомления"
     },
     "signals": {
       "title": "ОПОВЕЩЕНИЯ"
+    }
+  },
+  "contract": {
+    "signMessage": "Не подписывать автоматически",
+    "time": "Минут",
+    "confirmationTitle": "ПОДТВЕРДИТЬ",
+    "siteLabel": "САЙТ",
+    "contractLabel": "КОНТРАКТ",
+    "costLabel": "СТОИМОСТЬ",
+    "button": {
+      "confirm": "ПОДТВЕРДИТЬ",
+      "reject": "ОТМЕНИТЬ"
+    },
+    "card": {
+      "options": {
+        "title": "При выборе этого параметра, все триггеры смарт-контрактов, приходящие с этого адреса и вызывающие эту функцию, будут подписаны автоматически"
+      },
+      "switchLabel": "Подписывать автоматически"
+    }
+  },
+  "dapps": {
+    "title": "DAPPS",
+    "search": {
+      "placeholder": "Поиск или ввод www.",
+      "go": "ПЕРЕЙТИ",
+      "error": "Введите корректный адрес!"
+    },
+    "home": {
+      "cancelOperation": "выполнено",
+      "bookmark": {
+        "title": "Закладка"
+      },
+      "history": {
+        "title": "История"
+      }
     }
   }
 }

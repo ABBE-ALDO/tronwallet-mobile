@@ -212,7 +212,6 @@ const AppTabs = createMaterialBottomTabNavigator({
   },
   AddressBook: AddressBookStack,
   Balance: BalanceStack,
-  TronWebview,
   Transactions: TransactionList,
   Participate: ParticipateStack,
   Settings: SettingsStack
@@ -241,9 +240,6 @@ const AppTabs = createMaterialBottomTabNavigator({
         iconName = `dollar,-currency,-money,-cash,-coin`
       } else if (routeName === 'Exchange') {
         iconName = 'exchange'
-        iconSize = 22
-      } else if (routeName === 'TronWebview') {
-        iconName = `earth,-globe,-planet,-world,-universe`
         iconSize = 22
       }
 
@@ -281,7 +277,8 @@ const RootNavigator = createStackNavigator({
   },
   TransactionSuccess,
   Freeze: FreezeVoteScene,
-  Rewards: RewardsScene
+  Rewards: RewardsScene,
+  TronWebview
 }, {
   mode: 'modal',
   headerMode: 'none',

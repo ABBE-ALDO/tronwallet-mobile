@@ -6,7 +6,6 @@ import ActionSheet from 'react-native-actionsheet'
 import Toast from 'react-native-easy-toast'
 import { Answers } from 'react-native-fabric'
 import { createIconSetFromFontello } from 'react-native-vector-icons'
-import { StackActions, NavigationActions } from 'react-navigation'
 import OneSignal from 'react-native-onesignal'
 import Switch from 'react-native-switch-pro'
 import Biometrics from 'react-native-biometrics'
@@ -22,8 +21,7 @@ import ModalWebView from './../../components/ModalWebView'
 import AccountRecover from './RecoverAccount'
 
 // Utils
-import getBalanceStore from '../../store/balance'
-import { USER_PREFERRED_LANGUAGE, USER_FILTERED_TOKENS, ALWAYS_ASK_PIN, USE_BIOMETRY, ENCRYPTED_PIN, TOKENS_VISIBLE } from '../../utils/constants'
+import { USER_PREFERRED_LANGUAGE, USER_FILTERED_TOKENS, ALWAYS_ASK_PIN, USE_BIOMETRY, ENCRYPTED_PIN } from '../../utils/constants'
 import tl, { LANGUAGES } from '../../utils/i18n'
 import fontelloConfig from '../../assets/icons/config.json'
 import { withContext } from '../../store/context'
@@ -34,12 +32,6 @@ import { logSentry } from '../../utils/sentryUtils'
 import onBackgroundHandler from '../../utils/onBackgroundHandler'
 
 const Icon = createIconSetFromFontello(fontelloConfig, 'tronwallet')
-
-const resetAction = StackActions.reset({
-  index: 0,
-  actions: [NavigationActions.navigate({ routeName: 'FirstTime' })],
-  key: null
-})
 
 class Settings extends Component {
   static navigationOptions = {
@@ -53,7 +45,6 @@ class Settings extends Component {
     uri: '',
     subscriptionStatus: null,
     changingSubscription: false,
-    userTokens: [],
     userSelectedTokens: [],
     currentSelectedTokens: [],
     hiddenAccounts: [],
@@ -80,7 +71,6 @@ class Settings extends Component {
     )
     this._didFocus = this.props.navigation.addListener('didFocus', () => this._onLoadData(), this._getSelectedTokens)
     this.appStateListener = onBackgroundHandler(this._onAppStateChange)
-    MixPanel.trackWithProperties('Settings Operation', { type: 'Load data' })
   }
 
   componentWillUnmount () {
@@ -126,17 +116,10 @@ class Settings extends Component {
 
   _getSelectedTokens = async () => {
     try {
-      const store = await getBalanceStore()
-      const tokens = store.objects('Balance')
-        .filtered('TRUEPREDICATE DISTINCT(name)')
-        .filter(({ name }) => name !== 'TRX')
-        .map(({ name }) => ({ id: name, name }))
-
       const filteredTokens = await AsyncStorage.getItem(USER_FILTERED_TOKENS)
       const selectedTokens = filteredTokens ? JSON.parse(filteredTokens) : []
 
       this.setState({
-        userTokens: tokens,
         userSelectedTokens: selectedTokens,
         currentSelectedTokens: selectedTokens
       })
@@ -149,7 +132,7 @@ class Settings extends Component {
     const { alwaysAskPin } = this.props.context
     await AsyncStorage.setItem(ALWAYS_ASK_PIN, `${!alwaysAskPin}`)
     this.props.context.setAskPin(!alwaysAskPin)
-    MixPanel.trackWithProperties('Settings Operation', { type: 'Setting ask pin', value: !alwaysAskPin })
+    MixPanel.trackWithProperties('Setting ask pin', { value: !alwaysAskPin })
   }
 
   _resetWallet = async () => {
@@ -165,9 +148,9 @@ class Settings extends Component {
             testInput: pin => pin === this.props.context.pin,
             onSuccess: async () => {
               await hardResetWalletData(this.props.context.pin)
-              this.props.context.resetAccount()
-              this.props.navigation.dispatch(resetAction)
-              MixPanel.trackWithProperties('Settings Operation', { type: 'Reset Wallet' })
+              const { accounts } = this.props.context
+              this.props.context.resetAccount(true)
+              MixPanel.trackWithProperties('Pin Validation - Reset Wallet', { accounts })
             }
           })
         }
@@ -197,7 +180,10 @@ class Settings extends Component {
         this.props.navigation.navigate('Pin', {
           shouldDoubleCheck: true,
           shouldGoBack: true,
-          onSuccess: pin => this.props.context.setPin(pin, () => this.refs.settingsToast.show(tl.t('settings.pin.success')))
+          onSuccess: pin => {
+            MixPanel.track('Pin Validation - Change PIN')
+            this.props.context.setPin(pin, () => this.refs.settingsToast.show(tl.t('settings.pin.success')))
+          }
         })
       }
     })
@@ -208,9 +194,6 @@ class Settings extends Component {
       ({ subscriptionStatus }) => ({ subscriptionStatus: !subscriptionStatus }),
       () => {
         OneSignal.setSubscription(this.state.subscriptionStatus)
-        OneSignal.getPermissionSubscriptionState(
-          status => console.log('subscriptions status', status)
-        )
         if (this.state.subscriptionStatus) {
           Client.registerDeviceForNotifications(
             this.props.context.oneSignalId,
@@ -221,16 +204,6 @@ class Settings extends Component {
         }
       }
     )
-  }
-
-  _changeTokensVisibility = async currentValue => {
-    try {
-      await AsyncStorage.setItem(TOKENS_VISIBLE, `${!this.props.context.verifiedTokensOnly}`)
-      this.props.context.setVerifiedTokensOnly(!this.props.context.verifiedTokensOnly)
-      MixPanel.trackWithProperties('Settings Operation', { type: 'Change tokens visibility' })
-    } catch (error) {
-      this.props.context.setVerifiedTokensOnly(currentValue)
-    }
   }
 
   _openLink = (uri) => this.setState({ modalVisible: true, uri })
@@ -248,7 +221,7 @@ class Settings extends Component {
             {
               text: tl.t('settings.language.button.confirm'),
               onPress: () => {
-                MixPanel.trackWithProperties('Settings Operation', { type: 'Change language', value: language.value })
+                MixPanel.trackWithProperties('Change language', { value: language.value })
                 RNRestart.Restart()
               }
             }
@@ -266,9 +239,10 @@ class Settings extends Component {
     const { currentSelectedTokens } = this.state
     try {
       await AsyncStorage.setItem(USER_FILTERED_TOKENS, JSON.stringify(currentSelectedTokens))
-      this.setState({ userSelectedTokens: currentSelectedTokens })
-      MixPanel.trackWithProperties('Settings Operation', { type: 'Token filter' })
+      this.setState({ userSelectedTokens: currentSelectedTokens, tokenFilterModal: false })
+      MixPanel.trackWithProperties('Token filter', { tokens: currentSelectedTokens })
     } catch (error) {
+      this.setState({ tokenFilterModal: false })
       logSentry(error, 'Settings - Save tokens')
     }
   }
@@ -283,7 +257,7 @@ class Settings extends Component {
       }
       await AsyncStorage.setItem(USE_BIOMETRY, `${!useBiometry}`)
       this.props.context.setUseBiometry(!useBiometry)
-      MixPanel.trackWithProperties('Settings Operation', { type: 'Save Biometry', value: !useBiometry })
+      MixPanel.track('Save Biometry')
     } catch (error) {
       logSentry(error, 'Settings - Save Biometry')
       Alert.alert(tl.t('biometry.auth.title'), tl.t('biometry.auth.error'))
@@ -302,13 +276,12 @@ class Settings extends Component {
       currentSelectedTokens: userSelectedTokens,
       tokenFilterModal: !tokenFilterModal
     })
-
     this.SectionedMultiSelect._toggleSelector()
   }
 
   _renderList = () => {
-    const { seed, userTokens } = this.state
-    const { secretMode } = this.props.context
+    const { seed } = this.state
+    const { secretMode, balances, publicKey } = this.props.context
     const list = [
       {
         title: tl.t('settings.sectionTitles.wallet'),
@@ -319,9 +292,14 @@ class Settings extends Component {
             onPress: () => this.props.navigation.navigate('Market')
           },
           {
+            title: tl.t('settings.dappBrowser.title'),
+            icon: 'earth,-globe,-planet,-world,-universe',
+            onPress: () => this.props.navigation.navigate('TronWebview')
+          },
+          {
             title: tl.t('settings.token.title'),
             icon: 'sort,-filter,-arrange,-funnel,-filter',
-            hide: userTokens.length === 0,
+            hide: !balances[publicKey],
             onPress: this._showTokenSelect
           },
           {
@@ -335,19 +313,6 @@ class Settings extends Component {
             onPress: () => {
               this.helpView.open('https://help.tronwallet.me/')
             }
-          },
-          {
-            title: tl.t('settings.verifiedTokensOnly'),
-            icon: 'guarantee',
-            right: () => (
-              <Switch
-                circleStyle={{ backgroundColor: Colors.orange }}
-                backgroundActive={Colors.yellow}
-                backgroundInactive={Colors.secondaryText}
-                value={this.props.context.verifiedTokensOnly}
-                onSyncPress={this._changeTokensVisibility}
-              />
-            )
           }
         ]
       },
@@ -507,24 +472,24 @@ class Settings extends Component {
     )
   }
 
+  _getMultiselectOptions = () => {
+    const { getCurrentBalances } = this.props.context
+    return getCurrentBalances().map(balance => ({name:  `[${balance.id}] ${balance.name}`, id: balance.id}))
+  }
   render() {
     const {
-      userTokens,
       currentSelectedTokens,
-      uri,
       tokenFilterModal,
-      modalVisible,
       accountsModal,
       hiddenAccounts } = this.state
     const languageOptions = LANGUAGES.map(language => language.value)
-
     return (
       <Utils.SafeAreaView>
         <NavigationHeader title={tl.t('menu.title')} />
         <Utils.Container keyboardShouldPersistTaps='always' keyboardDismissMode='interactive'> 
           <SectionedMultiSelect
             ref={ref => { this.SectionedMultiSelect = ref }}
-            items={userTokens}
+            items={this._getMultiselectOptions()}
             uniqueKey='id'
             onSelectedItemsChange={(selected) => this.setState({ currentSelectedTokens: selected })}
             selectedItems={currentSelectedTokens}

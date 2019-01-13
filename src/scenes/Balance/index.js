@@ -80,8 +80,15 @@ export class BalanceScene extends Component {
 
   _loadData = async () => {
     try {
-      this.props.context.loadUserData()
-      MixPanel.trackWithProperties('Account Operation', { type: 'Balance load' })
+      await this.props.context.loadUserData()
+      const currentAccount = this.props.context.getCurrentAccount()
+      if (currentAccount) {
+        MixPanel.trackWithProperties('Balance load', {
+          name: currentAccount.name,
+          address: currentAccount.address,
+          balance: currentAccount.balance || 0
+        })
+      }
     } catch (e) {
       this.setState({ error: tl.t('balance.error.loadingData') })
       logSentry(e, 'Balance - LoadData')

@@ -18,6 +18,7 @@
   "success": "Success",
   "warning": "Warning",
   "cancel": "Cancel",
+  "remove": "Remove",
   "address": "Διεύθυνση",
   "message": "Message",
   "ex": "Exchange",
@@ -360,6 +361,9 @@
     "notifications": {
       "title": "Ειδοποιήσεις"
     },
+    "dappBrowser": {
+      "title": "DApp Browser"
+    },
     "network": {
       "title": "Δίκτυο",
       "modal": {
@@ -661,11 +665,49 @@
   },
   "notifications": {
     "title": "NOTIFICATIONS",
+    "empty": {
+      "msg": "No notifications available at the moment"
+    },
     "notifications": {
-      "title": "TRANSACTIONS"
+      "title": "notifications"
     },
     "signals": {
       "title": "SIGNALS"
+    }
+  },
+  "contract": {
+    "signMessage": "Don't sign automatically",
+    "time": "Minutes",
+    "confirmationTitle": "CONFIRM",
+    "siteLabel": "SITE",
+    "contractLabel": "CONTRACT",
+    "costLabel": "COST",
+    "button": {
+      "confirm": "CONFIRM",
+      "reject": "REJECT"
+    },
+    "card": {
+      "options": {
+        "title": "Setting this option, all the trigger smart contracts comming from this address and calling that function will be automatically signed"
+      },
+      "switchLabel": "Sign automatically"
+    }
+  },
+  "dapps": {
+    "title": "DAPPS",
+    "search": {
+      "placeholder": "Search or type www.",
+      "go": "GO",
+      "error": "Enter with valid search!"
+    },
+    "home": {
+      "cancelOperation": "done",
+      "bookmark": {
+        "title": "Bookmark"
+      },
+      "history": {
+        "title": "History"
+      }
     }
   }
 }

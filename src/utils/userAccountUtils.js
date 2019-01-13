@@ -4,12 +4,12 @@ import getBalanceStore from '../store/balance'
 import getTransactionStore from '../store/transactions'
 import getCandidatesStore from '../store/candidates'
 import WalletClient from '../services/client'
-import { USER_STATUS, USER_FILTERED_TOKENS, VERIFIED_TOKENS, FAVORITE_EXCHANGES, ASK_PIN_EX } from './constants'
-import NodesIp from './nodeIp'
+
 import { resetContactsData } from './contactUtils'
 import { resetSecretData } from './secretsUtils'
 import { logSentry } from './sentryUtils'
 import { generateMockTransactionSigned } from './transactionUtils'
+import { USER_STATUS, USER_FILTERED_TOKENS, VERIFIED_TOKENS, FAVORITE_EXCHANGES, USE_BIOMETRY, ALWAYS_ASK_PIN, ASK_PIN_EX } from './constants'
 
 export const resetWalletData = async () => {
   const [balanceStore, transactionStore] = await Promise.all([
@@ -46,11 +46,12 @@ export const hardResetWalletData = async (pin) => (
     resetListsData(),
     resetContactsData(),
     resetSecretData(pin),
-    NodesIp.switchTestnet(false),
     AsyncStorage.setItem(USER_STATUS, 'reset'),
     AsyncStorage.setItem(USER_FILTERED_TOKENS, '[]'),
     AsyncStorage.setItem(FAVORITE_EXCHANGES, '[]'),
-    AsyncStorage.setItem(ASK_PIN_EX, 'true')
+    AsyncStorage.setItem(ASK_PIN_EX, 'true'),
+    AsyncStorage.setItem(ALWAYS_ASK_PIN, 'true'),
+    AsyncStorage.setItem(USE_BIOMETRY, 'false')
   ])
 )
 

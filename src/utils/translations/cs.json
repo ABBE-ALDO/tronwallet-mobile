@@ -18,15 +18,16 @@
   "success": "Úspěch",
   "warning": "Varování",
   "cancel": "Zrušit",
+  "remove": "Odstranit",
   "address": "Adresa",
   "message": "Zpráva",
   "ex": "Burza",
   "ok": "OK",
   "actionModalTitle": "Zvolte",
-  "time": "Time",
+  "time": "Čas",
   "account": "Účet",
   "restore": "Obnovit",
-  "security": "Security",
+  "security": "Bezpečnost",
   "error": {
     "default": "Ups, něco se pokazilo. Zkuste to znovu později. Pokud chyba přetrvává, zkuste změnit nastavení sítě.",
     "buildingTransaction": "Chyba při vytváření transakce, zkuste to znovu.",
@@ -83,13 +84,13 @@
       "buy": "Mírným zvýšením odhadovaných nákladů se zvýší úspěšnost obchodu.",
       "sell": "Mírným snížením odhadovaného výnosu se zvýší úspěšnost obchodu."
     },
-    "txAmount": "Transaction Amount",
+    "txAmount": "Částka transakce",
     "estimatedRevenue": "ODHADOVANÝ PŘÍJEM",
     "estimatedCost": "ODHADOVANÉ NÁKLADY",
     "preview": "Hledat podle názvu tokenu",
     "notFound": "Obchody nenalezeny",
-    "error": "Exchange not executed. Please review your input values and try again.",
-    "askPin": "Ask PIN for exchange Transactions"
+    "error": "Obchod neproveden. Prosím zkontrolujte vstupní hodnoty a zkuste znova.",
+    "askPin": "Vyžadován PIN pro obchodní transakce"
   },
   "hideAccount": "Chystáte se odstranit tento účet. Později jej můžete obnovit v nastavení",
   "components": {
@@ -360,6 +361,9 @@
     "notifications": {
       "title": "Oznámení"
     },
+    "dappBrowser": {
+      "title": "DApp Browser"
+    },
     "network": {
       "title": "Síť",
       "modal": {
@@ -532,7 +536,7 @@
     "success": "ÚSPĚCH!"
   },
   "votes": {
-    "title": "HLASY",
+    "title": "HLASOVÁNÍ",
     "totalVotes": "POČET HLASŮ",
     "votesAvailable": "DOSTUPNÉ HLASY",
     "search": "Hledat",
@@ -661,11 +665,49 @@
   },
   "notifications": {
     "title": "NOTIFIKACE",
+    "empty": {
+      "msg": "Momentálně nejsou k dispozici žádná oznámení"
+    },
     "notifications": {
-      "title": "TRANSAKCE"
+      "title": "oznámení"
     },
     "signals": {
       "title": "SIGNÁLY"
+    }
+  },
+  "contract": {
+    "signMessage": "Automaticky se nepřihlašovat",
+    "time": "Minuty",
+    "confirmationTitle": "CONFIRM",
+    "siteLabel": "SITE",
+    "contractLabel": "CONTRACT",
+    "costLabel": "COST",
+    "button": {
+      "confirm": "CONFIRM",
+      "reject": "REJECT"
+    },
+    "card": {
+      "options": {
+        "title": "Setting this option, all the trigger smart contracts comming from this address and calling that function will be automatically signed"
+      },
+      "switchLabel": "Sign automatically"
+    }
+  },
+  "dapps": {
+    "title": "DAPPS",
+    "search": {
+      "placeholder": "Search or type www.",
+      "go": "GO",
+      "error": "Enter with valid search!"
+    },
+    "home": {
+      "cancelOperation": "done",
+      "bookmark": {
+        "title": "Bookmark"
+      },
+      "history": {
+        "title": "History"
+      }
     }
   }
 }
