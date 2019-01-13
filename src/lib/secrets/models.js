@@ -21,3 +21,17 @@ UserSecret.schema = {
     meta: 'string'
   }
 }
+
+export class Contact {
+
+}
+
+Contact.schema = {
+  name: 'Contact',
+  primaryKey: 'address',
+  properties: {
+    address: 'string',
+    name: 'string',
+    alias: 'string'
+  }
+}

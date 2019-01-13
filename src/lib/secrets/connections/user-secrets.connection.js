@@ -1,7 +1,7 @@
 import Realm from 'realm'
-import { UserSecret } from './models'
-import { getEncryptionKey } from '../security/crypto'
-import RealmStore from '../infra-data/realm.store'
+import { UserSecret } from '../models'
+import { getEncryptionKey } from '../../security/crypto'
+import RealmStore from '../../infra-data/realm.store'
 
 const migration = (oldRealm, newRealm) => {
   const newObjects = newRealm.objects('UserSecret')
@@ -21,7 +21,7 @@ const migration = (oldRealm, newRealm) => {
   }
 }
 
-export const openRealmConnection = () => Realm.open({
+const openRealmConnection = () => Realm.open({
   path: `realm.userSecrets`,
   schema: [UserSecret],
   schemaVersion: 2,
@@ -34,7 +34,7 @@ let _instance = null
 export default async () => {
   if (!_instance) {
     const connection = await openRealmConnection()
-    _instance = new RealmStore(connection, 'UserSecrets')
+    _instance = new RealmStore(connection, 'UserSecret')
   }
 
   return _instance

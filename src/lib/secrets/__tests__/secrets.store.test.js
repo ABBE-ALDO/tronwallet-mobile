@@ -2,7 +2,7 @@ import RealmStoreMock from '../../infra-data/__mocks__/realm.store.mock'
 import SecretsStore from '../secrets.store'
 
 describe('Secret store', () => {
-  let _secretStore, _contactStore, _store, _mockData, _RNTron
+  let _secretStore, _contactStore, _store, _mockData, _RNTron, _client
 
   beforeEach(() => {
     _mockData = [
@@ -14,83 +14,14 @@ describe('Secret store', () => {
       generateKeypair: () => ({})
     }
 
+    _client = {
+      broadcastTransaction: () => ({}),
+      getTransferTransaction: () => ({})
+    }
+
     _store = new RealmStoreMock('key', _mockData)
     _contactStore = new RealmStoreMock('key', _mockData)
-    _secretStore = new SecretsStore(_RNTron, _store, _contactStore)
-  })
-
-  describe('Create user secret account', () => {
-    test('should create when account name and mnemonic was filled', async () => {
-      const accountName = 'Asdf 1234'
-      const mnemonic = 'asdf qwer zxcv'
-
-      const newUser = await _secretStore.create(accountName, mnemonic)
-
-      const expected = {
-        mnemonic,
-        name: accountName,
-        alias: '@asdf_1234',
-        confirmed: true,
-        hide: false
-      }
-
-      expect(newUser).toEqual(expected)
-    })
-
-    test('should not create when account name wasn\'t filled', async () => {
-      const accountName = ''
-      const mnemonic = 'asdf qwer zxcv'
-
-      const newUser = await _secretStore.create(accountName, mnemonic)
-
-      expect(newUser).toBeNull()
-    })
-
-    test('should not create when mnemonic wasn\'t filled', async () => {
-      const accountName = 'Asdf 1234'
-      const mnemonic = ''
-
-      const newUser = await _secretStore.create(accountName, mnemonic)
-
-      expect(newUser).toBeNull()
-    })
-  })
-
-  describe('Create FIRST user secret account', () => {
-    test('should create when mnemonic filled and accounts is empty', async () => {
-      const store = new RealmStoreMock('key', [])
-      const secretStore = new SecretsStore(_RNTron, store, _contactStore)
-
-      const mnemonic = 'asdf qwer zxcv'
-
-      const newUser = await secretStore.createFirstAccount(mnemonic)
-
-      const expected = {
-        mnemonic,
-        name: 'Main account',
-        alias: '@main_account',
-        confirmed: true,
-        hide: false
-      }
-
-      expect(newUser).toEqual(expected)
-    })
-
-    test('should not create when mnemonic wasn\'t filled', async () => {
-      const mnemonic = ''
-
-      const newUser = await _secretStore.createFirstAccount(mnemonic)
-
-      expect(newUser).toBeNull()
-    })
-
-    test('should not create when accounts isn\'t empty', async () => {
-      const mnemonic = 'asdf qwer zxcv'
-
-      const newUser = await _secretStore.createFirstAccount(mnemonic)
-
-      expect(newUser).toBeNull()
-    })
+    _secretStore = new SecretsStore(_RNTron, _store, jest.fn(), _client, _contactStore)
   })
 
   describe('List accounts', () => {
@@ -102,7 +33,7 @@ describe('Secret store', () => {
 
     test('should return empty list when accounts list is empty', () => {
       const store = new RealmStoreMock('key', [])
-      const secretStore = new SecretsStore(_RNTron, store, _contactStore)
+      const secretStore = new SecretsStore(_RNTron, store, jest.fn(), _client, _contactStore)
 
       const accounts = secretStore.findAllAccounts()
 
@@ -117,7 +48,7 @@ describe('Secret store', () => {
 
     test('should return empty list when list doesn\'t have visible accounts', () => {
       const store = new RealmStoreMock('key', [{ key: 1, value: 'a', hide: true }])
-      const secretStore = new SecretsStore(_RNTron, store, _contactStore)
+      const secretStore = new SecretsStore(_RNTron, store, jest.fn(), _client, _contactStore)
 
       const accounts = secretStore.findVisibleAccounts()
 

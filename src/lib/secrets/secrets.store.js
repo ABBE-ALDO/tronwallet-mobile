@@ -1,8 +1,10 @@
 class SecretsStore {
-  constructor (tron, store, contactStore) {
+  constructor (tron, secretsConnection, logger, client, contactsConnection) {
     this._tron = tron
-    this._store = store
-    this._contactStore = contactStore
+    this._secretsConnection = secretsConnection
+    this._logger = logger
+    this._client = client
+    this._contactsConnection = contactsConnection
   }
 
   createMnemonic () {}
@@ -13,50 +15,12 @@ class SecretsStore {
 
   signTransaction () {}
 
-  async create (accountName, mnemonic) {
-    if (!accountName || !mnemonic) {
-      return null
-    }
-
-    const accounts = this.findAllAccounts()
-
-    const userSecret = await this._tron.generateKeypair(mnemonic, accounts.length, false)
-
-    userSecret.mnemonic = mnemonic
-    userSecret.name = accountName
-    userSecret.alias = this.formatAlias(accountName)
-    userSecret.confirmed = true
-    userSecret.hide = false
-
-    await this._store.save(userSecret)
-
-    return userSecret
-  }
-
-  async createFirstAccount (mnemonic) {
-    const accounts = this.findAllAccounts()
-    if (accounts.length) {
-      return null
-    }
-
-    return this.create('Main account', mnemonic)
-  }
-
-  async createByExistentAccount (accountName) {
-    const firstAccount = this.findFirstAccount()
-    if (!firstAccount) {
-      return null
-    }
-
-    return this.create(accountName, firstAccount.mnemonic)
-  }
-
   getStoreByAccountType (accountType) {
     switch (accountType) {
       case 'User':
-        return this._store
+        return this._secretsConnection
       case 'Contact':
-        return this._contactStore
+        return this._contactsConnection
       default:
         return null
     }
@@ -68,7 +32,7 @@ class SecretsStore {
   }
 
   async resetSecretData () {
-    await this._store.resetData()
+    await this._secretsConnection.resetData()
   }
 
   formatAlias (name) {
@@ -76,7 +40,7 @@ class SecretsStore {
   }
 
   findAllAccounts () {
-    return this._store.findAll() || []
+    return this._secretsConnection.findAll() || []
   }
 
   findFirstAccount () {
@@ -91,6 +55,44 @@ class SecretsStore {
 
   findVisibleAccounts () {
     return this.findAllAccounts().filter(account => !account.hide)
+  }
+
+  async checkAccount (address, privateKey) {
+    let exception = null
+
+    try {
+      const mockTransactionSigned = await this.generateMockTransactionSigned(address, privateKey)
+      await this._client.broadcastTransaction(mockTransactionSigned)
+    } catch (e) {
+      exception = e
+    }
+
+    if (!exception) {
+      return
+    }
+
+    const { data } = exception.response || {}
+
+    if (!data) {
+      return
+    }
+
+    if (data.type === 'INSUFICIENT_AMOUNT' || data.type === 'ACCOUNT_NOT_EXISTS') {
+      return
+    }
+
+    if (data.error !== 'validate signature error') {
+      this._logger(exception, 'Check Account response')
+    }
+
+    throw exception
+  }
+
+  async generateMockTransactionSigned (address, privateKey) {
+    const mockTransaction = { from: address, to: 'TJo2xFo14Rnx9vvMSm1kRTQhVHPW4KPQ76', amount: 0, token: 'TRX' }
+    const transactionUnsigned = await this._client.getTransferTransaction(mockTransaction)
+
+    return this._tron.signTransaction(privateKey, transactionUnsigned)
   }
 
   get publicKey () {
