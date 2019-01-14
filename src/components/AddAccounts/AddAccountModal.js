@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 import MixPanel from 'react-native-mixpanel'
 
 import tl from '../../utils/i18n'
-import { createNewAccount } from '../../utils/secretsUtils'
 import { logSentry } from '../../utils/sentryUtils'
+import { getAccountsCreatorStore } from '../../lib/secrets'
 
 import Modal from '../Modal'
 import LoadingButtonGradient from '../Buttons/LoadingButtonGradient'
@@ -48,14 +48,21 @@ class AddAccountModal extends PureComponent {
   _onSelectType = (key) => this.setState({ key })
 
   _addNewAccount = async () => {
-    this.setState({ creatingNewAccount: true, accountModalVisible: false })
+    this.setState({ creatingNewAccount: true })
 
     try {
-      const { accountName } = this.state
-      const { pin, oneSignalId } = this.props
+      const { accountName, key, accountData } = this.state
 
-      const createdNewAccount = await createNewAccount(pin, oneSignalId, accountName)
-      if (createdNewAccount) {
+      const accountsCreatorStore = await getAccountsCreatorStore()
+
+      const data = {
+        accountName,
+        ...accountData[key]
+      }
+
+      const newAccount = accountsCreatorStore.addAccountByMode(data, key)
+
+      if (newAccount) {
         return
       }
 
