@@ -12,7 +12,7 @@ const Container = styled.View`
   align-items: center;
   flex-wrap: wrap;
   flex-direction: row;
-  background-color: ${Colors.background};
+  /* background-color: ${Colors.background}; */
 `
 
 addDecorator(getStory => (
@@ -20,4 +20,3 @@ addDecorator(getStory => (
     <Container>{getStory()}</Container>
   </ScrollView>
 ))
-
