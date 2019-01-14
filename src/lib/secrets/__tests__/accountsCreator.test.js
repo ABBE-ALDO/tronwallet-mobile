@@ -23,7 +23,7 @@ describe('Secret store', () => {
     }
 
     _oneSignal = {
-      getId: () => ('asdf')
+      getOneSignalId: () => ('asdf')
     }
 
     _store = new RealmStoreMock('name', _mockData)

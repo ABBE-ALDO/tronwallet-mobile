@@ -50,13 +50,10 @@ ShallowWrapper {
             onChangeData={[Function]}
             onSelectType={[Function]}
           />
-          <ButtonGradient
+          <LoadingButtonGradient
             disabled={true}
-            font="medium"
-            leftRadius={4}
+            loading={false}
             onPress={[Function]}
-            rightRadius={4}
-            size="large"
             text="CREATE"
           />
         </Styled(View)>
@@ -93,13 +90,10 @@ ShallowWrapper {
             onChangeData={[Function]}
             onSelectType={[Function]}
           />
-          <ButtonGradient
+          <LoadingButtonGradient
             disabled={true}
-            font="medium"
-            leftRadius={4}
+            loading={false}
             onPress={[Function]}
-            rightRadius={4}
-            size="large"
             text="CREATE"
           />
         </Styled(View)>,
@@ -130,13 +124,10 @@ ShallowWrapper {
               onChangeData={[Function]}
               onSelectType={[Function]}
             />,
-            <ButtonGradient
+            <LoadingButtonGradient
               disabled={true}
-              font="medium"
-              leftRadius={4}
+              loading={false}
               onPress={[Function]}
-              rightRadius={4}
-              size="large"
               text="CREATE"
             />,
           ],
@@ -188,11 +179,8 @@ ShallowWrapper {
             "nodeType": "function",
             "props": Object {
               "disabled": true,
-              "font": "medium",
-              "leftRadius": 4,
+              "loading": false,
               "onPress": [Function],
-              "rightRadius": 4,
-              "size": "large",
               "text": "CREATE",
             },
             "ref": null,
@@ -240,13 +228,10 @@ ShallowWrapper {
               onChangeData={[Function]}
               onSelectType={[Function]}
             />
-            <ButtonGradient
+            <LoadingButtonGradient
               disabled={true}
-              font="medium"
-              leftRadius={4}
+              loading={false}
               onPress={[Function]}
-              rightRadius={4}
-              size="large"
               text="CREATE"
             />
           </Styled(View)>
@@ -283,13 +268,10 @@ ShallowWrapper {
               onChangeData={[Function]}
               onSelectType={[Function]}
             />
-            <ButtonGradient
+            <LoadingButtonGradient
               disabled={true}
-              font="medium"
-              leftRadius={4}
+              loading={false}
               onPress={[Function]}
-              rightRadius={4}
-              size="large"
               text="CREATE"
             />
           </Styled(View)>,
@@ -320,13 +302,10 @@ ShallowWrapper {
                 onChangeData={[Function]}
                 onSelectType={[Function]}
               />,
-              <ButtonGradient
+              <LoadingButtonGradient
                 disabled={true}
-                font="medium"
-                leftRadius={4}
+                loading={false}
                 onPress={[Function]}
-                rightRadius={4}
-                size="large"
                 text="CREATE"
               />,
             ],
@@ -378,11 +357,8 @@ ShallowWrapper {
               "nodeType": "function",
               "props": Object {
                 "disabled": true,
-                "font": "medium",
-                "leftRadius": 4,
+                "loading": false,
                 "onPress": [Function],
-                "rightRadius": 4,
-                "size": "large",
                 "text": "CREATE",
               },
               "ref": null,
