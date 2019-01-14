@@ -19,6 +19,15 @@ const migration = (oldRealm, newRealm) => {
       object.hide = false
     })
   }
+
+  if (oldRealm.schemaVersion < 3) {
+    newObjects.forEach((object, index) => {
+      object.order = index
+      object.type = 'TRX'
+      object.coin = 'TRONIX'
+      object.meta = null
+    })
+  }
 }
 
 const openRealmConnection = async () => {
@@ -26,7 +35,7 @@ const openRealmConnection = async () => {
   return Realm.open({
     path: `realm.userSecrets`,
     schema: [UserSecret],
-    schemaVersion: 2,
+    schemaVersion: 3,
     encryptionKey,
     migration
   })

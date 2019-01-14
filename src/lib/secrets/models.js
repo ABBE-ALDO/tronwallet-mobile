@@ -15,10 +15,10 @@ UserSecret.schema = {
     name: 'string',
     alias: 'string',
     hide: 'bool',
-    order: 'number',
+    order: 'int',
     type: 'string',
     coin: 'string',
-    meta: 'string'
+    meta: 'string?'
   }
 }
 
