@@ -7,7 +7,7 @@ import { createNewAccount } from '../../utils/secretsUtils'
 import { logSentry } from '../../utils/sentryUtils'
 
 import Modal from '../Modal'
-import ButtonGradient from '../ButtonGradient'
+import LoadingButtonGradient from '../Buttons/LoadingButtonGradient'
 import { View } from '../Utils'
 import { Colors } from '../DesignSystem'
 
@@ -88,6 +88,8 @@ class AddAccountModal extends PureComponent {
       totalAccounts
     } = this.props
 
+    const { creatingNewAccount } = this.state
+
     const addAccountDisabled = this._disableAddAccount()
 
     return (
@@ -112,10 +114,11 @@ class AddAccountModal extends PureComponent {
               onSelectType={this._onSelectType}
               onChangeData={this._onChangeData}
             />
-            <ButtonGradient
+            <LoadingButtonGradient
               text={tl.t(`import.button.create`)}
               onPress={this._addNewAccount}
               disabled={addAccountDisabled}
+              loading={creatingNewAccount}
             />
           </View>
         </View>
