@@ -50,7 +50,7 @@ class AccountsCreatorStore {
     }
 
     if (account) {
-      const oneSignalId = this._oneSignal.getId()
+      const oneSignalId = this._oneSignal.getOneSignalId()
       this._client.registerDeviceForNotifications(oneSignalId, account.address, false)
     }
 

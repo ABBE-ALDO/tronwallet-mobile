@@ -4,8 +4,8 @@ export const setOneSignalId = (id) => {
   _oneSignalId = id
 }
 
-export const getOneSignalId = (id) => {
-  if (!id) {
+export const getOneSignalId = () => {
+  if (!_oneSignalId) {
     throw new Error('OneSignalId isn\'t loaded')
   }
 
