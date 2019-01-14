@@ -11,6 +11,7 @@ import { decrypt } from '../../utils/encrypt'
 import * as Utils from '../../components/Utils'
 
 import { USE_BIOMETRY, ENCRYPTED_PIN } from '../../utils/constants'
+import { savePin, validatePin } from '../../lib/security/crypto'
 
 class PinScene extends Component {
   state = {
@@ -49,24 +50,38 @@ class PinScene extends Component {
   }
 
   _onSubmit = async (currentPin) => {
+    if (this.pinPad) {
+      this.pinPad.reset()
+    }
+
     const testInput = this.props.navigation.getParam('testInput')
-    const onSuccess = this.props.navigation.getParam('onSuccess')
+    const shouldDoubleCheck = this.props.navigation.getParam('shouldDoubleCheck', false)
+
+    let result
+
     if (testInput) {
-      const result = await testInput(currentPin)
-      if (result) {
-        this.props.navigation.goBack(null)
-        if (onSuccess) {
-          if (this.pinPad) {
-            this.pinPad.reset()
-          }
-          onSuccess(currentPin)
-        }
-      } else {
-        if (this.pinPad) {
-          this.pinPad.reset()
-          this.pinPad.shake()
-        }
+      result = await testInput(currentPin)
+    } else if (shouldDoubleCheck) {
+      result = true
+      savePin(currentPin)
+    } else {
+      result = await validatePin(currentPin)
+    }
+
+    if (!result) {
+      if (this.pinPad) {
+        this.pinPad.shake()
       }
+
+      return
+    }
+
+    this.props.navigation.goBack(null)
+
+    const onSuccess = this.props.navigation.getParam('onSuccess')
+
+    if (onSuccess) {
+      onSuccess(currentPin)
     }
   }
 

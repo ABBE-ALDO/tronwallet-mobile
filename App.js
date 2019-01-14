@@ -28,6 +28,7 @@ import Async from './src/utils/asyncStorageUtils'
 
 import { getSystemStatus, getFixedTokensV2 } from './src/services/contentful/general'
 import NavigationService from './src/utils/hocs/NavigationServices'
+import { setOneSignalId } from './src/lib/security/oneSignal'
 // import './ReactotronConfig'
 
 if (!__DEV__) {
@@ -104,8 +105,7 @@ class App extends Component {
         this._requestPIN()
       } else {
         NavigationService.navigate('FirstTime', {
-          shouldDoubleCheck: useStatus !== 'reset',
-          testInput: this._tryToOpenStore
+          shouldDoubleCheck: useStatus !== 'reset'
         })
       }
       this.setState({ alwaysAskPin, fixedTokens, useBiometry, currency, systemAddress }, () => {
@@ -122,11 +122,10 @@ class App extends Component {
   }
 
   _onAppStateChange = (nextAppState) => {
-    const { alwaysAskPin, pin } = this.state
+    const { alwaysAskPin } = this.state
     if (nextAppState.match(/background/)) {
       if (alwaysAskPin) {
         NavigationService.navigate('Pin', {
-          testInput: resultPIN => resultPIN === pin,
           onSuccess: () => {
             if (NavigationService.hasNotification()) {
               NavigationService.checkNotifications()
@@ -139,7 +138,6 @@ class App extends Component {
 
   _requestPIN = () => {
     NavigationService.navigate('Pin', {
-      testInput: this._tryToOpenStore,
       onSuccess: this._handleSuccess
     })
   }
@@ -176,6 +174,7 @@ class App extends Component {
   }
 
   _onIds = device => {
+    setOneSignalId(device.userId)
     this.setState({ oneSignalId: device.userId })
   }
 
