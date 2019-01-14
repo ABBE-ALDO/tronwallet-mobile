@@ -21,13 +21,16 @@ const migration = (oldRealm, newRealm) => {
   }
 }
 
-const openRealmConnection = () => Realm.open({
-  path: `realm.userSecrets`,
-  schema: [UserSecret],
-  schemaVersion: 2,
-  encryptionKey: getEncryptionKey(),
-  migration
-})
+const openRealmConnection = async () => {
+  const encryptionKey = await getEncryptionKey()
+  return Realm.open({
+    path: `realm.userSecrets`,
+    schema: [UserSecret],
+    schemaVersion: 2,
+    encryptionKey,
+    migration
+  })
+}
 
 let _instance = null
 
