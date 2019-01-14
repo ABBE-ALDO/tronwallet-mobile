@@ -99,6 +99,10 @@ class SecretsStore {
     const account = this.findFirstAccount()
     return (account || {}).address
   }
+
+  get connection () {
+    return this._secretsConnection
+  }
 }
 
 export default SecretsStore
