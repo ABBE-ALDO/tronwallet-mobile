@@ -688,29 +688,29 @@
     },
     "error": {
       "invalidContract": "Ongeldig contract, probeer het opnieuw of neem contact op met support",
-      "noAmount": "You don't have enough amount to run this contract"
+      "noAmount": "U heeft niet voldoende tokens in uw wallet om dit contract uit te voeren"
     },
     "card": {
       "options": {
-        "title": "Setting this option, all the trigger smart contracts coming from this address and calling that function will be automatically signed"
+        "title": "Als u deze optie instelt, worden alle slimme triggercontracten die afkomstig zijn van dit adres en die functie oproepen automatisch ondertekend"
       },
-      "switchLabel": "Auto Sign"
+      "switchLabel": "Automatisch ondertekenen"
     }
   },
   "dapps": {
     "title": "DAPPS",
     "search": {
-      "placeholder": "Search or type www.",
+      "placeholder": "Zoeken of type www.",
       "go": "GO",
-      "error": "Enter with valid search!"
+      "error": "Voer een geldige zoekopdracht in!"
     },
     "home": {
-      "cancelOperation": "done",
+      "cancelOperation": "klaar",
       "bookmark": {
-        "title": "Bookmark"
+        "title": "Bladwijzer"
       },
       "history": {
-        "title": "History"
+        "title": "Geschiedenis"
       }
     }
   }
