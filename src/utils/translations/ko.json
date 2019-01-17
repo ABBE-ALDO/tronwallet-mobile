@@ -359,7 +359,7 @@
       "accounts": "계정 관리"
     },
     "addressBook": {
-      "title": "Address Book"
+      "title": "주소록"
     },
     "notifications": {
       "title": "알림"
@@ -688,11 +688,11 @@
     },
     "error": {
       "invalidContract": "올바르지 않은 컨트랙트입니다. 다시 시도하시거나 관련 dapp에 도움을 요청하시길 바랍니다.",
-      "noAmount": "You don't have enough amount to run this contract"
+      "noAmount": "이 컨트랙트를 실행하기 위해 필요한 잔액이 충분하지 않습니다."
     },
     "card": {
       "options": {
-        "title": "Setting this option, all the trigger smart contracts coming from this address and calling that function will be automatically signed"
+        "title": "이 옵션을 설정하면, 이 주소에서 발생한 모든 스마트 컨트랙트와 해당 함수 호출이 자동으로 서명될 것입니다."
       },
       "switchLabel": "자동 서명"
     }
