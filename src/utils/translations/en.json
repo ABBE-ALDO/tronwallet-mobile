@@ -542,7 +542,8 @@
     "search": "Search",
     "searchPreview": "Suggestions - My latest votes",
     "error": "Oops, something didn't load correctly. Try to reload",
-    "notFound": "Super Representative not found"
+    "notFound": "Super Representative not found",
+    "official": "official"
   },
   "scanPayment": {
     "scan": "SCAN",

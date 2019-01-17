@@ -17,7 +17,7 @@ import { formatNumber } from '../../utils/numberUtils'
 // Components
 import * as Utils from '../../components/Utils'
 import Header from '../../components/Header'
-import VoteItem from '../../components/Vote/list/Item'
+import VoteItem, { GradientCard } from '../../components/Vote/list/Item'
 import AddVotesModal from '../../components/Vote/AddModal'
 import ConfirmModal from '../../components/Vote/ConfirmModal'
 import FadeIn from '../../components/Animations/FadeIn'
@@ -438,46 +438,61 @@ class VoteScene extends Component {
         openModal={() => this._setupVoteModal(item)}
         voteCount={currentVotes[item.address]}
         userVote={userVotes[item.address]}
+        official={item.address === 'TE7hnUtWRRBz3SkFrX8JESWUmEvxxAhoPt'}
       />
     )
   }
 
   _renderListHedear = () => {
-    const { totalVotes, totalRemaining, isSearching } = this.state
-    if (!isSearching) {
-      return (
-        <React.Fragment>
-          <GrowIn name='vote-header' height={63}>
-            <Header>
-              <Utils.View align='center'>
-                <Utils.Text size='tiny' weight='500' secondary>
-                  {tl.t('votes.totalVotes')}
-                </Utils.Text>
-                <Utils.VerticalSpacer />
-                <Utils.Text size='small'>{formatNumber(totalVotes)}</Utils.Text>
-              </Utils.View>
-              <Utils.View align='center'>
-                <Utils.Text size='tiny' weight='500' secondary>
-                  {tl.t('votes.votesAvailable')}
-                </Utils.Text>
-                <Utils.VerticalSpacer />
-                <Utils.Text
-                  size='small'
-                  style={{
-                    color: `${totalRemaining < 0 ? '#dc3545' : '#fff'}`
-                  }}
-                >
-                  {formatNumber(totalRemaining)}
-                </Utils.Text>
-              </Utils.View>
-            </Header>
-          </GrowIn>
-          <Utils.VerticalSpacer size='large' />
-        </React.Fragment>
-      )
-    } else {
+    const { totalVotes, totalRemaining, isSearching, voteList } = this.state
+    const { currentVotes, userVotes, refreshing, loadingList } = this.state
+
+    if (isSearching) {
       return null
     }
+
+    const item = voteList.find(vote => vote.address === 'TE7hnUtWRRBz3SkFrX8JESWUmEvxxAhoPt')
+    console.log(item)
+    return (
+      <React.Fragment>
+        <GrowIn name='vote-header' height={63}>
+          <Header>
+            <Utils.View align='center'>
+              <Utils.Text size='tiny' weight='500' secondary>
+                {tl.t('votes.totalVotes')}
+              </Utils.Text>
+              <Utils.VerticalSpacer />
+              <Utils.Text size='small'>{formatNumber(totalVotes)}</Utils.Text>
+            </Utils.View>
+            <Utils.View align='center'>
+              <Utils.Text size='tiny' weight='500' secondary>
+                {tl.t('votes.votesAvailable')}
+              </Utils.Text>
+              <Utils.VerticalSpacer />
+              <Utils.Text
+                size='small'
+                style={{
+                  color: `${totalRemaining < 0 ? '#dc3545' : '#fff'}`
+                }}
+              >
+                {formatNumber(totalRemaining)}
+              </Utils.Text>
+            </Utils.View>
+          </Header>
+        </GrowIn>
+        <Utils.VerticalSpacer size='large' />
+
+        {item && (
+          <GradientCard
+            disabled={refreshing || loadingList}
+            item={item}
+            index={0}
+            openModal={() => this._setupVoteModal(item)}
+            voteCount={currentVotes[item.address]}
+            userVote={userVotes[item.address]}
+          />)}
+      </React.Fragment>
+    )
   }
 
   _renderEmptyList = () => {
