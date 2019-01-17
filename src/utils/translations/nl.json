@@ -359,7 +359,7 @@
       "accounts": "BEHEER VAN DE REKENINGEN"
     },
     "addressBook": {
-      "title": "Address Book"
+      "title": "Adresboek"
     },
     "notifications": {
       "title": "Notificaties"
@@ -676,18 +676,18 @@
     }
   },
   "contract": {
-    "signMessage": "Don't sign automatically",
-    "time": "Minutes",
-    "confirmationTitle": "CONFIRM",
-    "siteLabel": "SITE",
+    "signMessage": "Niet automatisch ondertekenen",
+    "time": "Minuten",
+    "confirmationTitle": "BEVESTIGEN",
+    "siteLabel": "WEBSITE",
     "contractLabel": "CONTRACT",
-    "costLabel": "COST",
+    "costLabel": "KOSTEN",
     "button": {
-      "confirm": "CONFIRM",
-      "reject": "REJECT"
+      "confirm": "BEVESTIGEN",
+      "reject": "AFWIJZEN"
     },
     "error": {
-      "invalidContract": "Invalid contract, try again or contact the support for help",
+      "invalidContract": "Ongeldig contract, probeer het opnieuw of neem contact op met support",
       "noAmount": "You don't have enough amount to run this contract"
     },
     "card": {
