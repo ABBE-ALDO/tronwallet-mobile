@@ -12,6 +12,7 @@ import { Colors } from './../../components/DesignSystem'
 import tl from './../../utils/i18n'
 import { getSearchHistory, saveSearchHistory } from './../../utils/dappUtils'
 import { isURL } from './../../utils/formatUrl'
+import { ifIphoneX } from './../../utils/iosUtils'
 
 const View = Animated.createAnimatedComponent(
   styled.View`
@@ -59,15 +60,10 @@ class SearchDapps extends Component {
       Platform.select({ android: 'keyboardDidShow', ios: 'keyboardWillShow' }),
       this._onKeyboardShow
     )
-    // this.keyboardHide = Keyboard.addListener(
-    //   Platform.select({ android: 'keyboardDidHide', ios: 'keyboardWillHide' }),
-    //   this._onKeyboardHide
-    // )
   }
 
   componentWillUnmount () {
     this.keyboardShow.remove()
-    // this.keyboardHide.remove()
   }
 
   open = () => {
@@ -98,7 +94,7 @@ class SearchDapps extends Component {
     Animated.spring(this.state.heightAnimation, {
       toValue: Platform.select({
         android: MAX_HEIGHT - androidKeyBoardHeight - StatusBar.currentHeight,
-        ios: MAX_HEIGHT
+        ios: ifIphoneX((MAX_HEIGHT - 20), MAX_HEIGHT)
       })
     }).start(cb)
   }
