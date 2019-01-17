@@ -8,6 +8,7 @@ import reduce from 'lodash/reduce'
 import union from 'lodash/union'
 import clamp from 'lodash/clamp'
 import debounce from 'lodash/debounce'
+import Config from 'react-native-config'
 
 // Utils
 import tl from '../../utils/i18n'
@@ -438,7 +439,7 @@ class VoteScene extends Component {
         openModal={() => this._setupVoteModal(item)}
         voteCount={currentVotes[item.address]}
         userVote={userVotes[item.address]}
-        official={item.address === 'TE7hnUtWRRBz3SkFrX8JESWUmEvxxAhoPt'}
+        official={item.address === Config.TRONWALLET_ADDRESS}
       />
     )
   }
@@ -451,7 +452,7 @@ class VoteScene extends Component {
       return null
     }
 
-    const item = voteList.find(vote => vote.address === 'TE7hnUtWRRBz3SkFrX8JESWUmEvxxAhoPt')
+    const item = voteList.find(vote => vote.address === Config.TRONWALLET_ADDRESS)
     console.log(item)
     return (
       <React.Fragment>
