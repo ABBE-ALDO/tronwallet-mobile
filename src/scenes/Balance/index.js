@@ -111,8 +111,7 @@ export class BalanceScene extends Component {
 
     await this.props.context.loadUserData()
     this.carousel.innerComponent._snapToNewAccount()
-
-    this.setState({ creatingNewAccount: false })
+    this.setState({ accountModalVisible: false, creatingNewAccount: false })
   }
 
   _onRefresh = async () => {
@@ -207,7 +206,7 @@ export class BalanceScene extends Component {
           oneSignalId={oneSignalId}
           totalAccounts={userSecrets.length}
           visible={accountModalVisible}
-          onCreated={this._onCreatedNewAccount}
+          onCreated={() => this._onCreatedNewAccount()}
           closeModal={() => this.setState({ accountModalVisible: false })}
           gotoAddExistentAccount={this._gotoAddExistentAccount}
         />

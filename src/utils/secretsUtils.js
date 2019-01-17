@@ -10,6 +10,7 @@ import { formatAlias } from './contactUtils'
 import { USER_STATUS } from './constants'
 import { checkAccount } from './userAccountUtils'
 import tl from './i18n'
+import { getAccountsCreatorStore } from '../lib/secrets'
 
 export const createUserKeyPair = async (pin, oneSignalId, mnemonic = null) => {
   if (!mnemonic) mnemonic = await RNTron.generateMnemonic()
@@ -76,18 +77,10 @@ export const createNewAccount = async (pin, oneSignalId, newAccountName) => {
 }
 
 const generateKeypair = async (pin, oneSignalId, mnemonic, vaultNumber, randomlyGenerated, removeExtraDeviceIds = false) => {
-  // RandomlyGenerated is deprecated
-  const generatedKeypair = await RNTron.generateKeypair(mnemonic, 0, false)
-  generatedKeypair.mnemonic = mnemonic
-  generatedKeypair.confirmed = true
-  generatedKeypair.name = 'Main Account'
-  generatedKeypair.alias = '@main_account'
-  generatedKeypair.hide = false
   await resetSecretData(pin)
-  const secretsStore = await getSecretsStore(pin)
-  await secretsStore.write(() => secretsStore.create('UserSecret', generatedKeypair, true))
-  // TO-DO Review Serverless on this lambda
-  Client.registerDeviceForNotifications(oneSignalId, generatedKeypair.address, removeExtraDeviceIds).catch(err => console.log(err))
+
+  const accountsCreator = await getAccountsCreatorStore()
+  await accountsCreator.createFirstAccount(mnemonic)
 }
 
 export const restoreFromPrivateKey = async (pin, oneSignalId, address, privateKey) => {

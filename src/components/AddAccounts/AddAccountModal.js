@@ -37,6 +37,21 @@ class AddAccountModal extends PureComponent {
     accountData: {}
   }
 
+  static getDerivedStateFromProps (props, state) {
+    const { totalAccounts } = props
+
+    if (state.prevTotalAccounts !== totalAccounts) {
+      const accountName = `Account ${totalAccounts}`
+
+      return {
+        accountName,
+        prevTotalAccounts: totalAccounts
+      }
+    }
+
+    return null
+  }
+
   _changeAccountName = (accountName, error) =>
     this.setState({ accountName, accountNameInvalid: !!error })
 
@@ -60,9 +75,9 @@ class AddAccountModal extends PureComponent {
         ...accountData[key]
       }
 
-      const newAccount = accountsCreatorStore.addAccountByMode(data, key)
+      const newAccount = await accountsCreatorStore.addAccountByMode(data, key)
 
-      if (newAccount) {
+      if (!newAccount) {
         return
       }
 
@@ -91,11 +106,10 @@ class AddAccountModal extends PureComponent {
     const {
       visible,
       closeModal,
-      pin,
-      totalAccounts
+      pin
     } = this.props
 
-    const { creatingNewAccount } = this.state
+    const { accountName, creatingNewAccount } = this.state
 
     const addAccountDisabled = this._disableAddAccount()
 
@@ -114,7 +128,7 @@ class AddAccountModal extends PureComponent {
             />
             <AccountNameInput
               pin={pin}
-              totalAccounts={totalAccounts}
+              accountName={accountName}
               onChangeText={this._changeAccountName}
             />
             <AccountTypeSelector

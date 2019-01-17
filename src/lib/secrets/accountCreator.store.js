@@ -7,7 +7,7 @@ class AccountsCreatorStore {
     this._secretsStore = secretsStore
   }
 
-  async create (accountName, mnemonic) {
+  async create (accountName, mnemonic, registerDevice = false) {
     if (!accountName || !mnemonic) {
       return null
     }
@@ -21,8 +21,11 @@ class AccountsCreatorStore {
     userSecret.alias = this._secretsStore.formatAlias(accountName)
     userSecret.confirmed = true
     userSecret.hide = false
+    userSecret.order = accounts.length
+    userSecret.type = 'TRX'
+    userSecret.coin = 'TRONIX'
 
-    await this._secretsConnection.save(userSecret)
+    await this.saveUser(userSecret, registerDevice)
 
     return userSecret
   }
@@ -33,32 +36,24 @@ class AccountsCreatorStore {
       return null
     }
 
-    return this.create('Main account', mnemonic)
+    return this.create('Main account', mnemonic, true)
   }
 
   async addAccountByMode (accountData, mode) {
-    let account
     switch (mode) {
       case 'privateKey':
-        account = this.addAccountByPrivateKeyMode(accountData)
-        break
+        return this.addAccountByPrivateKeyMode(accountData)
       case 'watch':
-        account = this.addAccountByWatchMode(accountData)
-        break
+        return this.addAccountByWatchMode(accountData)
       default:
-        account = this.addAccountByExistent(accountData)
+        return this.addAccountByExistent(accountData)
     }
-
-    if (account) {
-      const oneSignalId = this._oneSignal.getOneSignalId()
-      this._client.registerDeviceForNotifications(oneSignalId, account.address, false)
-    }
-
-    return account
   }
 
   async addAccountByPrivateKeyMode ({ accountName, address, privateKey }) {
     await this._secretsStore.checkAccount(address, privateKey)
+
+    const accounts = this._secretsStore.findAllAccounts()
 
     const userSecrets = {
       privateKey,
@@ -69,10 +64,13 @@ class AccountsCreatorStore {
       password: '',
       hide: false,
       name: accountName,
-      alias: this._secretsStore.formatAlias(accountName)
+      alias: this._secretsStore.formatAlias(accountName),
+      order: accounts.length,
+      type: 'TRX',
+      coin: 'TRONIX'
     }
 
-    await this._secretsConnection.save(userSecrets)
+    await this.saveUser(userSecrets)
 
     return userSecrets
   }
@@ -83,11 +81,21 @@ class AccountsCreatorStore {
 
   async addAccountByExistent ({ accountName }) {
     const firstAccount = this._secretsStore.findFirstAccount()
+
     if (!firstAccount) {
       return null
     }
 
     return this.create(accountName, firstAccount.mnemonic)
+  }
+
+  async saveUser (userSecret, registerDevice = false) {
+    await this._secretsConnection.save(userSecret)
+
+    if (registerDevice) {
+      const oneSignalId = this._oneSignal.getOneSignalId()
+      this._client.registerDeviceForNotifications(oneSignalId, userSecret.address, true)
+    }
   }
 }
 
